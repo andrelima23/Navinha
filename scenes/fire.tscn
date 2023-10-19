@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://b6m2rjv3f1sqs"]
+
+[ext_resource type="Script" path="res://scripts/fire.gd" id="1_4feuh"]
+[ext_resource type="Texture2D" uid="uid://dl3epmbqig0i" path="res://assets/player/bala64.png" id="2_o7rmj"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_al1b1"]
+size = Vector2(13.5, 14)
+
+[node name="Fire" type="Node2D"]
+script = ExtResource("1_4feuh")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+use_parent_material = true
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_o7rmj")
+
+[node name="BulletArea" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BulletArea"]
+position = Vector2(0.25, 0)
+shape = SubResource("RectangleShape2D_al1b1")
+
+[connection signal="body_entered" from="BulletArea" to="." method="_on_area_2d_body_entered"]

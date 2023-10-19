@@ -1,0 +1,122 @@
+[gd_scene load_steps=11 format=3 uid="uid://c4aw154rrgfto"]
+
+[ext_resource type="Texture2D" uid="uid://bpopl0aph1wph" path="res://assets/player/nave128_damaged.png" id="1_hrkty"]
+[ext_resource type="Texture2D" uid="uid://bw5fqlb65g3tk" path="res://assets/player/nave128.png" id="1_yxeic"]
+[ext_resource type="Texture2D" uid="uid://ct2imj5rjjp4e" path="res://assets/player/nave128L1.png" id="6_2mmhl"]
+[ext_resource type="Texture2D" uid="uid://be5t6cpsmf2cl" path="res://assets/player/nave128L2.png" id="7_pd2pq"]
+[ext_resource type="Texture2D" uid="uid://b5isusdxslmrv" path="res://assets/player/nave128L3.png" id="8_wtu8w"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0axdo"]
+radius = 48.0
+height = 112.0
+
+[sub_resource type="Animation" id="Animation_jn6f6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_alsc6"]
+resource_name = "damaged"
+length = 1.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:visible")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4),
+"transitions": PackedFloat32Array(1, 1.56917, 1.46409, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [false, true, false, true, false, true, false, true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7cw6j"]
+_data = {
+"RESET": SubResource("Animation_jn6f6"),
+"damaged": SubResource("Animation_alsc6")
+}
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bdxpf"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_hrkty")
+}],
+"loop": true,
+"name": &"damaged",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_yxeic")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_2mmhl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_pd2pq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_wtu8w")
+}],
+"loop": false,
+"name": &"turn_l",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_2mmhl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_pd2pq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_wtu8w")
+}],
+"loop": false,
+"name": &"turn_r",
+"speed": 8.0
+}]
+
+[node name="player" type="CharacterBody2D"]
+collision_mask = 14
+motion_mode = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_0axdo")
+
+[node name="Animator" type="AnimationPlayer" parent="."]
+root_node = NodePath("../animNavinha")
+libraries = {
+"": SubResource("AnimationLibrary_7cw6j")
+}
+
+[node name="animNavinha" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_bdxpf")
+animation = &"damaged"
+flip_h = true
+
+[node name="gun_C" type="Marker2D" parent="."]
+position = Vector2(0, -68)
+
+[node name="gun_L" type="Marker2D" parent="."]
+position = Vector2(-33, 4)
+
+[node name="gun_R" type="Marker2D" parent="."]
+position = Vector2(33, 4)

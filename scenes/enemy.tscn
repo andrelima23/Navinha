@@ -1,0 +1,50 @@
+[gd_scene load_steps=6 format=3 uid="uid://dh07m8t3flmfi"]
+
+[ext_resource type="Texture2D" uid="uid://ylkw8dr8gffh" path="res://assets/player/enemy128.png" id="1_r7aio"]
+[ext_resource type="Script" path="res://scripts/enemy.gd" id="1_rf5js"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fqbxk"]
+radius = 11.5108
+height = 106.475
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cn3do"]
+size = Vector2(57.554, 48.8489)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ai8w3"]
+radius = 27.3381
+height = 115.108
+
+[node name="Enemy" type="CharacterBody2D" groups=["Enemies"]]
+scale = Vector2(0.695, 0.695)
+collision_layer = 4
+collision_mask = 5
+script = ExtResource("1_rf5js")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_r7aio")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_fqbxk")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(0, -25.9353)
+shape = SubResource("RectangleShape2D_cn3do")
+
+[node name="gun_L" type="Marker2D" parent="."]
+position = Vector2(-23, 40)
+
+[node name="gun_R" type="Marker2D" parent="."]
+position = Vector2(24, 40)
+
+[node name="ShootTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CapsuleShape2D_ai8w3")
+debug_color = Color(0.956863, 0, 0.537255, 0.419608)
+
+[connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

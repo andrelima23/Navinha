@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3 uid="uid://deip61d8rbw5"]
+
+[ext_resource type="Script" path="res://scripts/enemy2.gd" id="1_boir2"]
+[ext_resource type="Texture2D" uid="uid://dqanm2wouuoqi" path="res://assets/player/enemy128_2.png" id="2_h80g1"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_fqbxk"]
+radius = 27.0
+height = 116.0
+
+[node name="Enemy2" type="CharacterBody2D" groups=["Enemies"]]
+scale = Vector2(0.695, 0.695)
+collision_layer = 4
+collision_mask = 5
+script = ExtResource("1_boir2")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+light_mask = 2
+visibility_layer = 3
+texture = ExtResource("2_h80g1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_fqbxk")
+
+[node name="gun_L" type="Marker2D" parent="."]
+position = Vector2(-23, 25)
+
+[node name="gun_R" type="Marker2D" parent="."]
+position = Vector2(24, 25)
+
+[node name="ShootTimer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="ShootTimer" to="." method="_on_shoot_timer_timeout"]

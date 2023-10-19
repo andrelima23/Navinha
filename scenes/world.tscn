@@ -1,0 +1,35 @@
+[gd_scene load_steps=8 format=3 uid="uid://ba6giq8lwd6lc"]
+
+[ext_resource type="PackedScene" uid="uid://c4aw154rrgfto" path="res://scenes/player.tscn" id="1_3n37c"]
+[ext_resource type="PackedScene" uid="uid://moqr41vo8cfo" path="res://scenes/bg_parallax.tscn" id="1_pwuei"]
+[ext_resource type="Script" path="res://scripts/player.gd" id="3_l4ff4"]
+[ext_resource type="PackedScene" uid="uid://f6s1epu1bw7g" path="res://scenes/limits.tscn" id="4_etsss"]
+[ext_resource type="PackedScene" uid="uid://bhgp47y5mgb88" path="res://scenes/init_enemies.tscn" id="6_0addb"]
+[ext_resource type="PackedScene" uid="uid://dh07m8t3flmfi" path="res://scenes/enemy.tscn" id="7_ja27y"]
+[ext_resource type="PackedScene" uid="uid://27xjnqsbsbnb" path="res://scenes/hud_player.tscn" id="8_1y32w"]
+
+[node name="World" type="Node2D"]
+
+[node name="BGParallax" parent="." instance=ExtResource("1_pwuei")]
+
+[node name="limits" parent="." instance=ExtResource("4_etsss")]
+collision_layer = 8
+
+[node name="Player" parent="." instance=ExtResource("1_3n37c")]
+position = Vector2(598, 571)
+scale = Vector2(0.7, 0.7)
+script = ExtResource("3_l4ff4")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+process_mode = 2
+anchor_mode = 0
+
+[node name="init_enemies" parent="." instance=ExtResource("6_0addb")]
+
+[node name="hud_player" parent="." instance=ExtResource("8_1y32w")]
+position = Vector2(30, 20)
+
+[node name="Enemy" parent="." instance=ExtResource("7_ja27y")]
+position = Vector2(596, 110)
+
+[connection signal="make_damage" from="init_enemies" to="Player" method="_on_init_enemies_make_damage"]

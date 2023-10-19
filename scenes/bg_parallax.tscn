@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://moqr41vo8cfo"]
+
+[ext_resource type="Script" path="res://scripts/BGParallax.gd" id="1_7p7bm"]
+[ext_resource type="Texture2D" uid="uid://uubiuyvqjxag" path="res://assets/bg.png" id="2_j2tfs"]
+
+[node name="BGParallax" type="ParallaxBackground"]
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="."]
+z_index = -1
+texture_repeat = 3
+
+[node name="bg" type="Sprite2D" parent="ParallaxLayer"]
+z_index = -1
+texture_repeat = 3
+position = Vector2(0, -2000)
+scale = Vector2(0.781482, 0.947917)
+texture = ExtResource("2_j2tfs")
+centered = false
+script = ExtResource("1_7p7bm")
